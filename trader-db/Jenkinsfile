@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('init') {
+            steps {
+                git([url: 'https://github.com/gokulraja2787/trader-ops.git', branch: 'main'])
+            }
+        }
+
+        stage('pack artifact') {
+            steps {
+                sh "cd  trader-db"
+                sh "zip -cf trader-db.rar *.sh"
+            }
+        }
+        
+        stage('Copy scripts to remote host') {
+            sshagent(credentials : ['jenkins-pem']) {
+            sh "echo pwd"
+            sh 'ssh -t -t ubuntu@xx.xxx.xx.xx -o StrictHostKeyChecking=no "echo pwd && sudo -i -u root && cd /opt/docker/web && echo pwd"'
+        }
+        }
+    }
+}
