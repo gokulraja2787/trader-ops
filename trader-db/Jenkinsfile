@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        RCREDS = credentials('virtu-server-credentia')
+        RCREDS = credentials('virtu-server-credential')
     }
 
     stages {
