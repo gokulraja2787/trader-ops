@@ -1,3 +1,7 @@
+def remote = [:]
+remote.host="$rhost"
+remote.port="$rport"
+
 pipeline {
     agent any
 
@@ -38,9 +42,6 @@ pipeline {
                         ])
                     ])
                 }
-                def remote = [:]
-                remote.host="$rhost"
-                remote.port="$rport"
                 sshagent(credentials : ['virtu-server-credential']) {
                     sh "echo pwd"
                     sshCommand remote: remote, command: "pwd && ls -lrth"
