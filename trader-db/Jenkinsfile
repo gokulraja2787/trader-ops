@@ -1,6 +1,8 @@
 def remote = [:]
 remote.host="$rhost"
 remote.port="$rport"
+remote.name="$rname"
+remote.allowAnyHosts = true
 
 pipeline {
     agent any
@@ -44,7 +46,8 @@ pipeline {
                 }
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "virtu-server-credential", 
                     usernameVariable: 'username', passwordVariable: 'password']]) {
-                    sh "echo pwd"
+                    remote.user = "$username"
+                    remote.password = "$password"
                     sshCommand remote: remote, command: "pwd && ls -lrth"
                 }
             }
