@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    def remote = [:]
-    remote.name = "node"
-    remote.host = "node.abc.com"
-    remote.allowAnyHosts = true
 
     stages {
         stage('init') {
