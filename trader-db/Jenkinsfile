@@ -25,19 +25,21 @@ pipeline {
             sh "echo pwd"
             sh 'ssh -t -t ubuntu@xx.xxx.xx.xx -o StrictHostKeyChecking=no "echo pwd && sudo -i -u root && cd /opt/docker/web && echo pwd"'
             }*/
-            script {
-                sh 'pwd'
-                sshPublisher( continueOnError: false, failOnError: true, publishers: [
-                    sshPublisherDesc(
-                        configName: "virtu-server",
-                        verbose: true,
-                        transfers: [
-                        sshTransfer(
-                            sourceFiles: "trader-db.rar",
-                            execCommand: "tar -xf trader-db.rar"
-                        )
+            steps {
+                script {
+                    sh 'pwd'
+                    sshPublisher( continueOnError: false, failOnError: true, publishers: [
+                        sshPublisherDesc(
+                            configName: "virtu-server",
+                            verbose: true,
+                            transfers: [
+                            sshTransfer(
+                                sourceFiles: "trader-db.rar",
+                                execCommand: "tar -xf trader-db.rar"
+                            )
+                        ])
                     ])
-                ])
+                }
             }
         }
     }
