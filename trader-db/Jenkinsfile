@@ -42,7 +42,7 @@ pipeline {
                         ])
                     ])
                 }
-                sshagent(credentials : ['virtu-server-credential']) {
+                withCredentials(credentials : ['virtu-server-credential']) {
                     sh "echo pwd"
                     sshCommand remote: remote, command: "pwd && ls -lrth"
                 }
