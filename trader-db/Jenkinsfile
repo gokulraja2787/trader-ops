@@ -42,7 +42,8 @@ pipeline {
                         ])
                     ])
                 }
-                withCredentials(credentials : ['virtu-server-credential']) {
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "virtu-server-credential", 
+                    usernameVariable: 'username', passwordVariable: 'password']]) {
                     sh "echo pwd"
                     sshCommand remote: remote, command: "pwd && ls -lrth"
                 }
