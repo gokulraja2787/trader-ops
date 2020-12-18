@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    def remote = [:]
+    remote.name = "node"
+    remote.host = "node.abc.com"
+    remote.allowAnyHosts = true
+
     stages {
         stage('init') {
             steps {
@@ -16,10 +21,28 @@ pipeline {
         }
         
         stage('Copy scripts to remote host') {
+            /*withCredentials([usernamePassword(credentialsId: 'virtu-server-credential', passwordVariable: 'password', usernameVariable: 'userName')]){
+                remote.user = userName
+                remote.password = password
+            }
             sshagent(credentials : ['jenkins-pem']) {
             sh "echo pwd"
             sh 'ssh -t -t ubuntu@xx.xxx.xx.xx -o StrictHostKeyChecking=no "echo pwd && sudo -i -u root && cd /opt/docker/web && echo pwd"'
-        }
+            }*/
+            script {
+                sh 'pwd'
+                sshPublisher( continueOnError: false, failOnError: true, publishers: [
+                    sshPublisherDesc(
+                        configName: "virtu-server",
+                        verbose: true,
+                        transfers: [
+                        sshTransfer(
+                            sourceFiles: "trader-db.rar",
+                            execCommand: "tar -xf trader-db.rar"
+                        )
+                    ])
+                ])
+            }
         }
     }
 }
