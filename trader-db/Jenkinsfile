@@ -13,7 +13,7 @@ pipeline {
             steps {
                 sh "pwd"
                 sh "cd trader-db && ls -lrth"
-                sh "tar -cf trader-db.rar *.sh"
+                sh "tar -cvf trader-db.rar ./*.sh"
             }
         }
         
