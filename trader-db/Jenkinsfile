@@ -39,7 +39,7 @@ pipeline {
                     ])
                     def remote = [:]
                     remote.host="$rhost"
-                    remote.port="$rport"
+                    remote.port=$rport
                     remote.name="$rname"
                     remote.allowAnyHosts = true
                     remote.user = "$username"
