@@ -12,6 +12,7 @@ pipeline {
         stage('pack artifact') {
             steps {
                 sh "cd  trader-db"
+                sh "pwd && ls -lrth"
                 sh "tar -cf trader-db.rar *.sh"
             }
         }
