@@ -11,7 +11,7 @@ pipeline {
 
         stage('pack artifact') {
             steps {
-                sh "cd trader-db && tar -cvf trader-db.rar ."
+                sh "cd trader-db && tar -cvf trader-db.rar *.sh"
             }
         }
         
