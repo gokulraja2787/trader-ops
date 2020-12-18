@@ -32,12 +32,18 @@ pipeline {
                             configName: "virtu-server",
                             verbose: true,
                             transfers: [
-                            sshTransfer(
-                                sourceFiles: "trader-db.rar",
-                                execCommand: "tar -xf trader-db.rar"
-                            )
+                                sshTransfer(
+                                    sourceFiles: "trader-db.rar"
+                                )
                         ])
                     ])
+                }
+                def remote = [:]
+                remote.host="$rhost"
+                remote.port="$rport"
+                sshagent(credentials : ['virtu-server-credential']) {
+                    sh "echo pwd"
+                    sshCommand remote: remote, command: "pwd && ls -lrth"
                 }
             }
         }
