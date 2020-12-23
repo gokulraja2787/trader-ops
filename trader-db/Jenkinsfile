@@ -39,7 +39,7 @@ pipeline {
                     remote.password = "$RCREDS_PSW"
 
                     echo "Remove old rar"
-                    sshCommand remote: remote, command: "rm staging/trader-db.rar"
+                    sshCommand remote: remote, command: "rm ~/staging/trader-db.rar"
 
                     echo "Copy new rar"
                     sshPublisher( continueOnError: false, failOnError: true, publishers: [
