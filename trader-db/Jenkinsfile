@@ -54,7 +54,7 @@ pipeline {
                     ])
 
                     echo "Extract tar"
-                    sshCommand remote: remote, command: "cd ~/live/trader-db && rm *.sh  && tar -xvf ~/staging/trader-db.rar"
+                    sshCommand remote: remote, command: "cd ~/live/trader-db && rm -f *.sh  && tar -xvf ~/staging/trader-db.rar"
                 }
             }
         }
