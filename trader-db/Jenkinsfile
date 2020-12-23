@@ -44,8 +44,8 @@ pipeline {
                     remote.host='$rhost'
                     remote.name='$rname'
                     remote.allowAnyHosts = true
-                    remote.user = $RCREDS_USR
-                    remote.password = $RCREDS_PSW
+                    remote.user = '$RCREDS_USR'
+                    remote.password = '$RCREDS_PSW'
                     sshCommand remote: remote, command: "pwd && ls -lrth"
                 }
             }
