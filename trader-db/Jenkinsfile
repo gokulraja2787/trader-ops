@@ -30,23 +30,31 @@ pipeline {
             steps {
                 script {
                     sh 'pwd'
-                    sshPublisher( continueOnError: false, failOnError: true, publishers: [
-                        sshPublisherDesc(
-                            configName: "virtu-server",
-                            verbose: true,
-                            transfers: [
-                                sshTransfer(
-                                    sourceFiles: "trader-db.rar"
-                                )
-                        ])
-                    ])
+
                     def remote = [:]
                     remote.host="$rhost"
                     remote.name="$rname"
                     remote.allowAnyHosts = true
                     remote.user = "$RCREDS_USR"
                     remote.password = "$RCREDS_PSW"
-                    sshCommand remote: remote, command: "pwd && ls -lrth"
+
+                    echo "Remove old rar"
+                    sshCommand remote: remote, command: "rm staging/trader-db.rar"
+
+                    echo "Copy new rar"
+                    sshPublisher( continueOnError: false, failOnError: true, publishers: [
+                        sshPublisherDesc(
+                            configName: "virtu-server",
+                            verbose: true,
+                            transfers: [
+                                sshTransfer(
+                                    sourceFiles: "trader-db/trader-db.rar"
+                                )
+                        ])
+                    ])
+
+                    echo "Extract tar"
+                    sshCommand remote: remote, command: "cd ~/live/trader-db && rm *.sh  && tar -xvf ~/staging/trader-db.rar"
                 }
             }
         }
